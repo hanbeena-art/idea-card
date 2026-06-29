@@ -51,6 +51,20 @@ const buildInviteUrl = (token) => {
   return inviteUrl.toString()
 }
 
+const getInviteTokenFromInput = (value) => {
+  const trimmedValue = value.trim()
+
+  if (!trimmedValue) {
+    return ''
+  }
+
+  try {
+    return new URL(trimmedValue).searchParams.get('invite') ?? trimmedValue
+  } catch {
+    return trimmedValue
+  }
+}
+
 const loadStoredIdeas = () => {
   if (typeof localStorage === 'undefined') {
     return []
@@ -88,6 +102,7 @@ function App() {
   const [editingId, setEditingId] = useState(null)
   const [editingText, setEditingText] = useState('')
   const [inviteLink, setInviteLink] = useState('')
+  const [inviteInput, setInviteInput] = useState('')
   const [copyStatus, setCopyStatus] = useState('')
 
   useEffect(() => {
@@ -132,6 +147,32 @@ function App() {
 
     await navigator.clipboard.writeText(inviteLink)
     setCopyStatus('복사됐습니다.')
+  }
+
+  const createOwnBoard = () => {
+    localStorage.setItem(ACCESS_KEY, 'granted')
+    setHasAccess(true)
+    setAccessMessage('새 아이디어 보드를 만들었습니다.')
+  }
+
+  const joinWithInvite = async (event) => {
+    event.preventDefault()
+    const inviteToken = getInviteTokenFromInput(inviteInput)
+
+    if (!inviteToken) {
+      setAccessMessage('초대 링크를 입력해주세요.')
+      return
+    }
+
+    if (await isValidInviteToken(inviteToken)) {
+      localStorage.setItem(ACCESS_KEY, 'granted')
+      setHasAccess(true)
+      setAccessMessage('초대 링크로 입장했습니다.')
+      setInviteInput('')
+      return
+    }
+
+    setAccessMessage('초대 링크가 올바르지 않습니다.')
   }
 
   const addIdea = (event) => {
@@ -195,13 +236,35 @@ function App() {
   if (!hasAccess) {
     return (
       <main className="board-shell">
-        <section className="locked-panel" aria-labelledby="locked-title">
-          <p className="eyebrow">Private Board</p>
-          <h1 id="locked-title">초대가 필요합니다</h1>
+        <section className="start-panel" aria-labelledby="start-title">
+          <p className="eyebrow">Idea Board</p>
+          <h1 id="start-title">아이디어 보드를 시작하세요</h1>
           <p>
-            이 아이디어 보드는 초대 링크를 받은 사람만 사용할 수 있습니다.
-            친구가 보낸 링크로 다시 접속해주세요.
+            내 보드를 새로 만들거나, 친구가 보낸 초대 링크로 들어갈 수
+            있습니다.
           </p>
+
+          <div className="start-actions">
+            <button type="button" onClick={createOwnBoard}>
+              내 아이디어 보드 만들기
+            </button>
+
+            <form className="invite-join-form" onSubmit={joinWithInvite}>
+              <label htmlFor="invite-input">초대 링크로 들어오기</label>
+              <div className="invite-join-row">
+                <input
+                  id="invite-input"
+                  value={inviteInput}
+                  onChange={(event) => setInviteInput(event.target.value)}
+                  placeholder="초대 링크를 붙여넣으세요"
+                />
+                <button type="submit" disabled={!inviteInput.trim()}>
+                  입장
+                </button>
+              </div>
+            </form>
+          </div>
+
           {accessMessage ? <p className="access-message">{accessMessage}</p> : null}
         </section>
       </main>
