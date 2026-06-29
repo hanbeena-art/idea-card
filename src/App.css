@@ -1,0 +1,290 @@
+.board-shell {
+  width: min(1040px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 56px 0;
+}
+
+.board-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.board-header h1 {
+  margin: 0;
+  font-size: 64px;
+  line-height: 0.96;
+}
+
+.invite-panel {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+  width: min(100%, 440px);
+}
+
+.invite-link-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  width: 100%;
+}
+
+.invite-link-row input {
+  min-width: 0;
+}
+
+.copy-status,
+.access-message {
+  margin: 0;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.locked-panel {
+  display: grid;
+  gap: 14px;
+  max-width: 680px;
+  margin: 12vh auto 0;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.locked-panel h1 {
+  margin: 0;
+  font-size: 48px;
+  line-height: 1.05;
+}
+
+.locked-panel p {
+  margin: 0;
+}
+
+.idea-composer {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.idea-composer label {
+  color: var(--text-h);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.composer-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: stretch;
+}
+
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 15px;
+  color: var(--text-h);
+  background: var(--field);
+  font: inherit;
+  line-height: 1.5;
+}
+
+textarea {
+  min-height: 112px;
+  resize: vertical;
+}
+
+input {
+  min-height: 44px;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent);
+  outline: 3px solid var(--focus);
+}
+
+button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 18px;
+  color: #ffffff;
+  background: var(--accent);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--button-shadow);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+  transform: none;
+  box-shadow: none;
+}
+
+.idea-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 48px 24px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 8px;
+  color: var(--muted);
+  background: var(--surface-soft);
+  text-align: center;
+}
+
+.empty-state h2 {
+  margin: 0 0 8px;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+.idea-card {
+  display: grid;
+  min-height: 210px;
+  gap: 18px;
+  align-content: space-between;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.idea-card__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.idea-content {
+  margin: 0;
+  color: var(--text-h);
+  font-size: 18px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.edit-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.edit-panel textarea {
+  min-height: 138px;
+}
+
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.card-actions button {
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+.card-actions .ghost {
+  color: var(--text-h);
+  background: var(--neutral);
+}
+
+.card-actions .danger {
+  background: var(--danger);
+}
+
+@media (max-width: 640px) {
+  .board-shell {
+    width: min(100% - 24px, 1040px);
+    padding: 32px 0;
+  }
+
+  .board-header h1 {
+    font-size: 40px;
+  }
+
+  .board-header,
+  .invite-panel {
+    align-items: stretch;
+    justify-items: stretch;
+    width: 100%;
+  }
+
+  .board-header,
+  .invite-link-row {
+    grid-template-columns: 1fr;
+  }
+
+  .board-header {
+    display: grid;
+  }
+
+  .composer-row {
+    grid-template-columns: 1fr;
+  }
+
+  .composer-row button,
+  .invite-panel button {
+    width: 100%;
+  }
+
+  .idea-list {
+    grid-template-columns: 1fr;
+  }
+}
